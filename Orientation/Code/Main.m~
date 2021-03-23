@@ -1,0 +1,58 @@
+clc, clear, close all
+%%
+% Nonlinear - Extended kalman filter
+% Load ground truth orientation, angular velocity, acc_x, acc_y, acc_z
+[phi,phi_gt,AXY,XX,Tmag,tdmag,Tacc,tdacc,T3,td3] = groundtruth3D();
+
+%%
+% Measurement Vector [acc_x, acc_y, acc_z, orientation, angular velocity]
+y = NaN(9,length(td));
+
+% State vector [xdotdot, ydotdot, orientation, angular velocity]
+x = [XX(1,1),XX(2,1),XX(3,1),mag(1,1),gyro(1,1),mag(2,1),gyro(2,1),mag(3,1),gyro(3,1)]'*ones(1,length(td));
+
+% Intial P matrix
+P = 0.8*eye(length(x(:,1)));
+% covariance for w
+Q = diag([10, 10, 10, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]);
+% covariance for v
+R = diag([10*var(y(1,:)-AXY(1,:)), 10*var(y(2,:)-AXY(2,:)), 10*var(y(3,:)-AXY(3,:)), 10*var(y(4,:)-mag(1,:)), 10*var(y(5,:)-gyro(1,:)), 10*var(y(6,:)-mag(2,:)), 10*var(y(7,:)-gyro(2,:)),10*var(y(8,:)-mag(3,:)), 10*var(y(9,:)-gyro(3,:))]); 
+
+for m = 2:1:length(td)
+    
+    F = getF();
+    
+    [1,0,0,0,0,0,0,0,0;
+     0,1,0,0,0,0,0,0,0;
+     0,0,1,0,0,0,0,0,0;
+     0,0,0,1,T,0,0,0,0;
+     0,0,0,0,1,0,0,0,0;
+     0,0,0,0,0,1,T,0,0;
+     0,0,0,0,0,0,1,0,0;
+     0,0,0,0,0,0,0,1,T;
+     0,0,0,0,0,0,0,0,1];
+ 
+    y = getyNPVA(phi(1,:),phi(2,:),phi(3,:),phi(4,:),phi(5,:),phi(6,:),AXY(1,:),AXY(2,:),AXY(3,:),len,tdmag,tdacc,i,j,l,NN);
+
+    
+    x(:,m) = F*x(:,m-1);
+    P = F*P*F' + Q;
+    H = getJacoN(y(:,m),x(:,m));
+    % back tracking
+    G = P*H'/(H*P*H' + R);%lambda
+    % e
+    x(:,m) = x(:,m) + G*(y(:,m) - getHxkPVA(x(:,m)));
+    P = (eye(length(x(:,1))) - G*H)*P;
+    
+end
+
+figure
+subplot(9,1,1), plot(td, x(1,:), 'b', 'LineWidth', 2); hold on; plot(td, XX(1,:), 'r', 'LineWidth', 2); legend('estimated', 'gt'); title('Estimated acceleration along x axis'); grid on;
+subplot(9,1,2), plot(td, x(2,:), 'b', 'LineWidth', 2); hold on; plot(td, XX(2,:), 'r', 'LineWidth', 2); legend('estimated', 'gt'); title('Estimated acceleration along y axis'); grid on;
+subplot(9,1,3), plot(td, x(3,:), 'b', 'LineWidth', 2); hold on; plot(td, XX(3,:), 'r', 'LineWidth', 2); legend('estimated', 'gt'); title('Estimated orientation'); grid on;
+subplot(9,1,4), plot(td, x(4,:), 'b', 'LineWidth', 2); hold on; plot(td, mag(1,:), 'r', 'LineWidth', 2);     legend('estimated', 'gt'); title('Estimated angular velocity'); grid on;
+subplot(9,1,5), plot(td, x(5,:), 'b', 'LineWidth', 2); hold on; plot(td, gyro(1,:), 'r', 'LineWidth', 2); legend('estimated', 'gt'); title('Estimated acceleration along x axis'); grid on;
+subplot(9,1,6), plot(td, x(6,:), 'b', 'LineWidth', 2); hold on; plot(td, mag(2,:), 'r', 'LineWidth', 2); legend('estimated', 'gt'); title('Estimated acceleration along y axis'); grid on;
+subplot(9,1,7), plot(td, x(7,:), 'b', 'LineWidth', 2); hold on; plot(td, gyro(2,:), 'r', 'LineWidth', 2); legend('estimated', 'gt'); title('Estimated orientation'); grid on;
+subplot(9,1,8), plot(td, x(8,:), 'b', 'LineWidth', 2); hold on; plot(td, mag(3,:), 'r', 'LineWidth', 2);     legend('estimated', 'gt'); title('Estimated angular velocity'); grid on;
+subplot(9,1,9), plot(td, x(9,:), 'b', 'LineWidth', 2); hold on; plot(td, gyro(3,:), 'r', 'LineWidth', 2);     legend('estimated', 'gt'); title('Estimated angular velocity'); grid on;
