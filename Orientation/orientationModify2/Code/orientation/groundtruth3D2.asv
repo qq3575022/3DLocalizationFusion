@@ -1,0 +1,60 @@
+%function [mag,gyro,AXY,Tmag,tdmag,Tgyro,tdgyro,Tacc,tdacc,T3,td3] = groundtruth3D2()
+
+load('accT.mat');load('gyroT.mat');load('magT.mat');load('time.mat');
+
+td3    = unique(round(time(time<2.1&time>0), 5)); 
+
+tdacc  = round(accT,  5); %unique(round(accT(accT<2.1&accT>0), 5)); 
+tdgyro = round(gyroT, 5); %unique(round(gyroT(gyroT<2.1&gyroT>0), 5)); 
+tdmag  = round(magT,  5); %unique(round(magT(magT<2.1&magT>0), 5));
+
+td3(1) = 0.00001; tdacc(1) = 0.00001; tdgyro(1) = 0.00001;
+%
+
+Tmag = zeros(1, length(tdmag)); Tacc = zeros(1, length(tdacc)); Tgyro = zeros(1, length(tdgyro)); T3 = zeros(1, length(td3)); 
+
+
+for i = 2 : length(Tmag)
+    Tmag(i)  = tdmag(i)  - tdmag(i-1);
+end
+
+for i = 2 : length(Tacc)
+    Tacc(i)  = tdacc(i)  - tdacc(i-1);
+    Tgyro(i) = tdgyro(i) - tdgyro(i-1);
+    T3(i)    = td3(i)    - td3(i-1);
+end
+
+load('roll.mat'); load('pitch.mat'); load('yaw.mat');
+load('gyrox.mat');load('gyroy.mat'); load('gyroz.mat');
+
+mag = NaN(3,length(tdmag)); 
+mag(1,:) = roll;   mag(2,:) = pitch;   mag(3,:) = yaw; 
+
+gyro = NaN(3,length(tdgyro)); 
+gyro(1,:) = gyrox; gyro(2,:) = gyroy;  gyro(3,:) = gyroz; 
+
+AXY = NaN(3,length(tdacc)); 
+AXY(1,:) = accx;   AXY(2,:) = accy;    AXY(3,:) = accz; 
+
+% figure
+% subplot(311), plot(W_gt)
+% subplot(312), plot(W_V_gt)
+% subplot(313), plot(W_A_gt)
+% %%
+% figure 
+% subplot(611), plot(XX(1,:))
+% subplot(612), plot(XX(2,:))
+% subplot(613), plot(XX(3,:))
+% subplot(614), plot(XX(4,:))
+% subplot(615), plot(XX(5,:))
+% subplot(616), plot(XX(6,:))
+% 
+figure
+subplot(311), plot(AXY(1,:))
+subplot(312), plot(AXY(2,:))
+subplot(313), plot(AXY(3,:))
+% XX(1,1)  = x(1,142);  XX(2,1)  = x(2,142);  XX(3,1)  = x(3,142);
+% XX(4,1)  = y(1,142);  XX(5,1)  = y(2,142);  XX(6,1)  = y(3,142);
+% XX(7,1)  = z(1,142);  XX(8,1)  = z(2,142);  XX(9,1)  = z(3,142);
+% AXY(1,1) = 0;         AXY(2,1) = 0;         AXY(3,1) = 0;
+%end

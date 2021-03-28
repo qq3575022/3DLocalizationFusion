@@ -6,9 +6,9 @@ clc, clear, close all
 % in=0.393*cm
 % pr=in*60000%*-1
 
-s=serial('/dev/cu.usbserial-1460','BaudRate',19200,'Parity', 'none', 'DataBits',8, 'StopBits', 1, 'terminator', 'CR');
+s=serial('/dev/cu.usbserial-1410','BaudRate',19200,'Parity', 'none', 'DataBits',8, 'StopBits', 1, 'terminator', 'CR');
 fopen(s);
-pause(10);
+%pause(2);
 
 %fprintf(s,'PRX=1000')
 
@@ -45,7 +45,7 @@ n=6;
 %dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
-sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/4,(x(i,2)-x(i-1,2))/4,(x(i,3)-x(i-1,3))/4)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/1,(x(i,2)-x(i-1,2))/1,(x(i,3)-x(i-1,3))/1)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 %ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 %dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
@@ -56,7 +56,7 @@ fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port
 %fprintf(s,ac);
 %fprintf(s,dc);
 fprintf(s,'BG X');%BEGIN Motion along y axis only
-pause(8);
+pause(3);
 i=i+1;
 
 %% back
@@ -65,7 +65,7 @@ fprintf(s,'SH X')
 %dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
-sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/4,(x(i,2)-x(i-1,2))/4,(x(i,3)-x(i-1,3))/4)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/1,(x(i,2)-x(i-1,2))/1,(x(i,3)-x(i-1,3))/1)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 %ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 %dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
@@ -76,7 +76,7 @@ fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port
 %fprintf(s,ac);
 %fprintf(s,dc);
 fprintf(s,'BG X');%BEGIN Motion along y axis only
-pause(8);
+pause(3);
 i=i+1;
 
 
@@ -86,9 +86,9 @@ fprintf(s,'SH X')
 %dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
-sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/10,(x(i,2)-x(i-1,2))/10,(x(i,3)-x(i-1,3))/10)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/1,(x(i,2)-x(i-1,2))/1,(x(i,3)-x(i-1,3))/1)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/3,(x(i,2)-x(i-1,2))/3,(x(i,3)-x(i-1,3))/3)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/3,(x(i,2)-x(i-1,2))/3,(x(i,3)-x(i-1,3))/3)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
 %re = sprintf('TP Y') ;
 
@@ -107,9 +107,9 @@ fprintf(s,'SH Y')
 %dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
-sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/10,(x(i,2)-x(i-1,2))/10,(x(i,3)-x(i-1,3))/10)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/1,(x(i,2)-x(i-1,2))/1,(x(i,3)-x(i-1,3))/1)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/3,(x(i,2)-x(i-1,2))/3,(x(i,3)-x(i-1,3))/3)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/3,(x(i,2)-x(i-1,2))/3,(x(i,3)-x(i-1,3))/3)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
 %re = sprintf('TP Y') ;
 
@@ -118,7 +118,7 @@ fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port
 fprintf(s,ac);
 fprintf(s,dc);
 fprintf(s,'BG Y');%BEGIN Motion along y axis only
-pause(20);
+pause(15);
 i=i+1;
 
 %% Z
@@ -128,9 +128,9 @@ fprintf(s,'SH Z')
 %dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
-sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/10,(x(i,2)-x(i-1,2))/10,(x(i,3)-x(i-1,3))/10)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/1,(x(i,2)-x(i-1,2))/1,(x(i,3)-x(i-1,3))/1)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/3,(x(i,2)-x(i-1,2))/3,(x(i,3)-x(i-1,3))/3)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/3,(x(i,2)-x(i-1,2))/3,(x(i,3)-x(i-1,3))/3)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
 %re = sprintf('TP Y') ;
 
@@ -143,24 +143,24 @@ pause(15);
 i=i+1;
 
 %% XYZ
-fprintf(s,'SH XYZ')
- 
-%i = i
-%dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-
-sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/10,(x(i,2)-x(i-1,2))/10,(x(i,3)-x(i-1,3))/10)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/30,(x(i,2)-x(i-1,2))/30,(x(i,3)-x(i-1,3))/30)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
-
-%re = sprintf('TP Y') ;
-
-fprintf(s,dis);%WRITE DISTANCE string to Controller through serial port 
-fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port 
-fprintf(s,ac);
-fprintf(s,dc);
-fprintf(s,'BG XYZ');%BEGIN Motion along y axis only
-pause(15);
+% fprintf(s,'SH XYZ')
+%  
+% %i = i
+% %dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+% dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+% 
+% sp =sprintf('SP %i,%i,%i',(x(i,1)-x(i-1,1))/1,(x(i,2)-x(i-1,2))/1,(x(i,3)-x(i-1,3))/1)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+% ac =sprintf('AC %i,%i,%i',(x(i,1)-x(i-1,1))/3,(x(i,2)-x(i-1,2))/3,(x(i,3)-x(i-1,3))/3)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+% dc =sprintf('DC %i,%i,%i',(x(i,1)-x(i-1,1))/3,(x(i,2)-x(i-1,2))/3,(x(i,3)-x(i-1,3))/3)%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
+% 
+% %re = sprintf('TP Y') ;
+% 
+% fprintf(s,dis);%WRITE DISTANCE string to Controller through serial port 
+% fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port 
+% fprintf(s,ac);
+% fprintf(s,dc);
+% fprintf(s,'BG XYZ');%BEGIN Motion along y axis only
+% pause(20);
 
 
 %i = 0; %Initialize counter
