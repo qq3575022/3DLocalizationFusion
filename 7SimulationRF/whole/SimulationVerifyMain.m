@@ -7,9 +7,9 @@ tb = 1.1657;
 td = Time(Time >= ta & Time <= tb)'-ta;
 T = mean(diff(td));
 
-td  = 0:T:15;
-td1 = 0:T:20;
-td3 = 0:T:15*2+40;
+td  = 0:T:13;
+td1 = 0:T:23;
+td3 = 0:T:13*2+23*2;
 
 [PP1, VV1, AA1] = groundtruth1Dx(td);
 [PP2, VV2, AA2] = groundtruth1Dy(td1);
@@ -20,6 +20,21 @@ PP1 = PP1 - PP1(1);
 PP2 = PP2 - PP2(1);
 PP3 = PP3 - PP3(1);
 
+figure
+subplot(311), plot(td, PP1)
+subplot(312), plot(td, VV1)
+subplot(313), plot(td, AA1)
+
+figure
+subplot(311), plot(td1, PP2)
+subplot(312), plot(td1, VV2)
+subplot(313), plot(td1, AA2)
+
+figure
+subplot(311), plot(td, PP3)
+subplot(312), plot(td, VV3)
+subplot(313), plot(td, AA3)
+%%
 % 1D - 3D coordinates
 % td3
 A3 =  zeros(3, 2*length(td)+2*length(td1));
@@ -84,7 +99,7 @@ accz = medfilt1(acc_data_z,50);
 %%
 
 % 1D - 3D coordinates
-coord3 = zeros(3, length(AA1)*2+length(AA2)*2);
+coord3 = zeros(3, length(td3));
 %%
 % x
 coord3(1,1:length(AA1)) = PP1 + 1.03;
@@ -113,6 +128,7 @@ coord3_(2,1:length(AA2)) = flip(PP2) + 1.31;
 %z
 coord3_(3,1:length(AA1)) = flip(PP3) + 1.03;
 coord3_(3,length(AA1)+1:end) = 1.03;
+%%
 % position of readers
 %     x1 = [-0.05, 1.5];x2 = [2, 3];x3 = [2.7, 0.05];
 x1 = [0,    0,     0.865];%[2.6256, 0.0889,0.858];%[-0.2,-0.2, 0.4];
