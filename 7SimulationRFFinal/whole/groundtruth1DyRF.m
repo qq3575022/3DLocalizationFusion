@@ -1,16 +1,16 @@
-function [PP, VV, AA] = groundtruth1Dy(td)  
+function [PP, VV, AA] = groundtruth1DyRF(td)  
 
 p1 = 0;
 p2 = 0.2944;
 
-ac = 0.2944/(18*5);
-vc = 0.2944/18;
+ac = 0.2943;
+vc = 0.2943*sqrt(2944/2943);
 
 ta = vc/ac;
 tv = (p2-p1)/vc - vc/ac;
 
 % t1 = 0.157;
-t2 = ta+tv+ta
+t2 = ta+tv+ta;
 
 PP = NaN(1,length(td));
 VV = NaN(1,length(td));

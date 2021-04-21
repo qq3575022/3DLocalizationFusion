@@ -1,10 +1,10 @@
-function [PP, VV, AA] = groundtruth1Dx(td)  
+function [PP, VV, AA] = groundtruth1DxRF(td)  
 
 p1 = 0;
 p2 = 0.384;
 
-ac = 0.0128;
-vc = 0.0384;%0.384;
+ac = 0.128;
+vc = 0.128*sqrt(3);%0.384;
 
 ta = vc/ac;
 tv = (p2-p1)/vc - vc/ac;

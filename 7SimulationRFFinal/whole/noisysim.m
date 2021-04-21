@@ -7,6 +7,32 @@ phi_mod      = 4*pi*sqrt((z(1,k)-x(1))^2+(z(2,k)-x(2))^2+(z(3,k)-x(3))^2)/lambda
 
 diff = phi_mod - phi_prev_mod;
 
+delta_phi = diff;%phi_conc - phi_prev_conc;
+new_sigma = sigma/phi_mod + sigma/phi_prev_mod;
+phi_noise = 800000*new_sigma.*rand;
+
+delta_phi2 = exp(phi_noise)*delta_phi;
+
+H = sqrt((2*R*PT*GT*GR*Gt^2*lambda^4*X^2*M)/(4*pi*sqrt((z(1,k)-x(1))^2+(z(2,k)-x(2))^2+(z(3,k)-x(3))^2))^4);
+v = H;
+unirand = rand;
+
+% if sigma>>v
+% coeif = raylinv(unirand,sigma)
+% v = raylinv(unirand,sigma); 
+
+% v = icdf('Normal',unirand,v,sigma); %sigma*randn + mu;
+r = ((2*PT*GT*GR*Gt^2*lambda^4*X^2*M*R)/((4*pi)^4*v^2))^(1/4);
+
+v2 = icdf('Normal',unirand,v,sigma); %sigma*randn + mu;
+r2 = ((2*PT*GT*GR*Gt^2*lambda^4*X^2*M*R)/((4*pi)^4*v2^2))^(1/4);
+
+rdot  = lambda/(4*pi)*diff*1/T;
+rdot2 = lambda/(4*pi)*delta_phi2*1/T;
+
+end
+
+
 % global l; global l1; global l2;global l3;
 % 
 % if index == 0
@@ -95,28 +121,3 @@ diff = phi_mod - phi_prev_mod;
 
 %phi_prev_conc = phi_prev_mu;  %icdf('Normal',uniphase,phi_prev_mu,sigma);
 %phi_conc      = phi_mu;       %icdf('Normal',uniphase2,phi_mu,sigma);
-
-delta_phi = diff;%phi_conc - phi_prev_conc;
-new_sigma = sigma/phi_mod + sigma/phi_prev_mod;
-phi_noise = 800000*new_sigma.*rand;
-
-delta_phi2 = exp(phi_noise)*delta_phi;
-
-H = sqrt((2*R*PT*GT*GR*Gt^2*lambda^4*X^2*M)/(4*pi*sqrt((z(1,k)-x(1))^2+(z(2,k)-x(2))^2+(z(3,k)-x(3))^2))^4);
-v = H;
-unirand = rand;
-
-% if sigma>>v
-% coeif = raylinv(unirand,sigma)
-% v = raylinv(unirand,sigma); 
-
-% v = icdf('Normal',unirand,v,sigma); %sigma*randn + mu;
-r = ((2*PT*GT*GR*Gt^2*lambda^4*X^2*M*R)/((4*pi)^4*v^2))^(1/4);
-
-v2 = icdf('Normal',unirand,v,sigma); %sigma*randn + mu;
-r2 = ((2*PT*GT*GR*Gt^2*lambda^4*X^2*M*R)/((4*pi)^4*v2^2))^(1/4);
-
-rdot  = lambda/(4*pi)*delta_phi*1/T;
-rdot2 = lambda/(4*pi)*delta_phi2*1/T;
-
-end

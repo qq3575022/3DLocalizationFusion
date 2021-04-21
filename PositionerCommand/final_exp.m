@@ -6,7 +6,7 @@ clc, clear, close all
 % in=0.393*cm
 % pr=in*60000%*-1
 
-s=serial('/dev/cu.usbserial-1410','BaudRate',19200,'Parity', 'none', 'DataBits',8, 'StopBits', 1, 'terminator', 'CR');
+s=serial('/dev/tty.usbserial-1440','BaudRate',19200,'Parity', 'none', 'DataBits',8, 'StopBits', 1, 'terminator', 'CR');
 fopen(s);
 %pause(2);
 
@@ -56,7 +56,7 @@ fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port
 %fprintf(s,ac);
 %fprintf(s,dc);
 fprintf(s,'BG X');%BEGIN Motion along y axis only
-pause(3);
+pause(5);
 i=i+1;
 
 %% back
@@ -76,7 +76,7 @@ fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port
 %fprintf(s,ac);
 %fprintf(s,dc);
 fprintf(s,'BG X');%BEGIN Motion along y axis only
-pause(3);
+pause(5);
 i=i+1;
 
 
@@ -97,13 +97,16 @@ fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port
 fprintf(s,ac);
 fprintf(s,dc);
 fprintf(s,'BG X');%BEGIN Motion along y axis only
-pause(15);
+pause(25);
 i=i+1;
 
 %% Y
+s=serial('/dev/cu.usbserial-1460','BaudRate',19200,'Parity', 'none', 'DataBits',8, 'StopBits', 1, 'terminator', 'CR');
+fopen(s);
+
 fprintf(s,'SH Y')
 
-%i = i
+i = i
 %dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 dis=sprintf('PA %i,%i,%i',x(i,1),x(i,2),x(i,3))%SET TRAVEL DISTANCE: Print STRING of SET DISTANCE command from user input
 
@@ -118,7 +121,7 @@ fprintf(s,sp);%WRITE DISTANCE string to Controller through serial port
 fprintf(s,ac);
 fprintf(s,dc);
 fprintf(s,'BG Y');%BEGIN Motion along y axis only
-pause(15);
+pause(25);
 i=i+1;
 
 %% Z

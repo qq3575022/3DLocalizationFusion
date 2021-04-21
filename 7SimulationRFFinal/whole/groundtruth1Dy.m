@@ -31,7 +31,6 @@ for n = 1:length(td)
         v = -ac*(t-t2);
         a = -ac;
     else
-        n = n
         p = p2;
         v = 0;
         a = 0;
